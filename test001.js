@@ -1,9 +1,8 @@
 (function () {
-  function bindOne(box) {
-    if (box.dataset.bound) return; // 二重バインド防止
-    const input = box.querySelector(".tax2x-a");
-    const out = box.querySelector(".tax2x-result");
-    if (!input || !out) return;
+  function start() {
+    const input = document.querySelector(".tax2x-a");
+    const out = document.querySelector(".tax2x-result");
+    if (!input || !out) return false;
 
     function calc() {
       const a = Number(input.value);
@@ -12,19 +11,13 @@
 
     input.addEventListener("input", calc);
     calc();
-    box.dataset.bound = "1";
+    return true;
   }
 
-  function scan() {
-    document.querySelectorAll(".tax2x").forEach(bindOne);
-  }
-
-  // FC2は描画順が前後することがあるので複数回スキャン
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", scan);
-  } else {
-    scan();
-  }
-  setTimeout(scan, 300);
-  setTimeout(scan, 1500);
+  // FC2対策：少し待ちながら複数回トライ
+  let n = 0;
+  const timer = setInterval(() => {
+    n++;
+    if (start() || n >= 40) clearInterval(timer); // 最大約10秒
+  }, 250);
 })();
