@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>計算ツール</title>
+  <style>
+    body{font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; margin:12px;}
+    .box{border:1px solid #ddd; padding:12px; border-radius:10px;}
+    .result{font-weight:700; margin-top:8px;}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <label>A：<input id="a" type="number" step="1"></label>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const a = document.getElementById("a");
+    const r = document.getElementById("result");
+    function calc(){
+      const v = Number(a.value);
+      r.textContent = Number.isFinite(v) ? `A×2 = ${v*2}` : "";
+    }
+    a.addEventListener("input", calc);
+    calc();
+  </script>
+</body>
+</html>
